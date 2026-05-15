@@ -1,0 +1,54 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # 3 AM UTC daily
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run code generation
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Run all tests
+        run: flutter test
+
+      - name: Run golden tests (update goldens)
+        run: flutter test --update-goldens
+
+      - name: Check for golden changes
+        run: |
+          if git diff --exit-code test/golden/; then
+            echo "No golden changes detected"
+          else
+            echo "Golden files changed — manual review required"
+            git diff test/golden/ > golden-diff.patch
+          fi
+
+      - name: Upload golden diff
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-diff
+          path: golden-diff.patch
+
+      - name: Maestro integration tests (placeholder)
+        run: |
+          echo "Maestro integration tests will be configured here"
+          # maestro test .maestro/

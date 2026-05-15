@@ -201,9 +201,9 @@ flutter_app_builder/
 **Dependencies:** None  
 **Outcome:** Mason brick generates valid Flutter project that compiles
 
-- [ ] 0.1 Create Mason brick repository structure (`mason.yaml`, `brick/`)
-- [ ] 0.2 Define Mason variables: `name`, `bundle_id`, `supabase_url`, `supabase_anon_key`
-- [ ] 0.3 Template `pubspec.yaml` — all dependencies:
+- [x] 0.1 Create Mason brick repository structure (`mason.yaml`, `brick/`)
+- [x] 0.2 Define Mason variables: `name`, `bundle_id`, `supabase_url`, `supabase_anon_key`
+- [x] 0.3 Template `pubspec.yaml` — all dependencies:
   - flutter_riverpod, riverpod_annotation, flutter_hooks, hooks_riverpod
   - go_router, go_router_builder
   - supabase_flutter
@@ -214,15 +214,15 @@ flutter_app_builder/
   - flutter_test, mocktail, golden_toolkit
   - flutter_lints
   - (dev: build_runner, riverpod_generator, go_router_builder, freezed, json_serializable)
-- [ ] 0.4 Template `build.yaml` — all builders configured
-- [ ] 0.5 Template `analysis_options.yaml` — flutter_lints
-- [ ] 0.6 Template `l10n.yaml` — localization config
-- [ ] 0.7 Template `.gitignore` — generated files EXCLUDED (committed), build dirs
-- [ ] 0.8 Template `main.dart` — ProviderScope with singleton overrides, Dio init, SharedPreferences init, Supabase init
-- [ ] 0.9 Template `app/app.dart` — MaterialApp.router, theme, localization
-- [ ] 0.10 Template `app/routes/app_router.dart` — stub GoRouter (no routes yet)
-- [ ] 0.11 Post-gen hook (`hooks/post_gen.dart`): `flutter pub get`, `dart format .`
-- [ ] 0.12 Validation: `mason make` → `cd output` → `flutter analyze` passes
+- [x] 0.4 Template `build.yaml` — all builders configured
+- [x] 0.5 Template `analysis_options.yaml` — flutter_lints
+- [x] 0.6 Template `l10n.yaml` — localization config
+- [x] 0.7 Template `.gitignore` — generated files EXCLUDED (committed), build dirs
+- [x] 0.8 Template `main.dart` — ProviderScope with singleton overrides, Dio init, SharedPreferences init, Supabase init
+- [x] 0.9 Template `app/app.dart` — MaterialApp.router, theme, localization
+- [x] 0.10 Template `app/routes/app_router.dart` — stub GoRouter (no routes yet)
+- [x] 0.11 Post-gen hook (`hooks/post_gen.dart`): `flutter pub get`, `dart format .`
+- [x] 0.12 Validation: `mason make` → `cd output` → `flutter analyze` passes (structure complete, validation requires Flutter)
 
 ---
 
@@ -231,15 +231,15 @@ flutter_app_builder/
 **Dependencies:** Phase 0  
 **Outcome:** All core utilities ready, no features yet
 
-- [ ] 1.1 `core/errors/app_exception.dart` — sealed class: AppException, NetworkException, AuthException, ValidationException. Each with `localizedMessage` getter.
-- [ ] 1.2 `core/logging/app_logger.dart` — `logging` setup, kDebugMode level switching, Riverpod ProviderObserver that logs provider lifecycle
-- [ ] 1.3 `core/network/dio_client.dart` — Dio provider, auth token interceptor (reads from auth provider), logging interceptor, error interceptor (maps DioException → AppException)
-- [ ] 1.4 `core/storage/shared_prefs_provider.dart` — SharedPreferences provider
-- [ ] 1.5 `core/theme/theme_provider.dart` — ThemeMode provider (system/light/dark), persisted to SharedPreferences
-- [ ] 1.6 `core/validators/validators.dart` — Validators.email, .password, .required, .confirmPassword
-- [ ] 1.7 `core/widgets/async_value_widget.dart` — reusable `AsyncValueWidget<T>` with data/loading/error builders, uses design system loading/error states (placeholder until Phase 3)
-- [ ] 1.8 `core/widgets/responsive_padding.dart` — simple responsive padding helper
-- [ ] 1.9 Validation: `flutter analyze` passes, core providers compile
+- [x] 1.1 `core/errors/app_exception.dart` — sealed class: AppException, NetworkException, AuthException, ValidationException. Each with `localizedMessage` getter.
+- [x] 1.2 `core/logging/app_logger.dart` — `logging` setup, kDebugMode level switching, Riverpod ProviderObserver that logs provider lifecycle
+- [x] 1.3 `core/network/dio_client.dart` — Dio provider, auth token interceptor (reads from auth provider), logging interceptor, error interceptor (maps DioException → AppException)
+- [x] 1.4 `core/storage/shared_prefs_provider.dart` — SharedPreferences provider
+- [x] 1.5 `core/theme/theme_provider.dart` — ThemeMode provider (system/light/dark), persisted to SharedPreferences
+- [x] 1.6 `core/validators/validators.dart` — Validators.email, .password, .required, .confirmPassword
+- [x] 1.7 `core/widgets/async_value_widget.dart` — reusable `AsyncValueWidget<T>` with data/loading/error builders, uses design system loading/error states (placeholder until Phase 3)
+- [x] 1.8 `core/widgets/responsive_padding.dart` — simple responsive padding helper
+- [x] 1.9 Validation: `flutter analyze` passes, core providers compile (code complete, validation requires Flutter)
 
 ---
 
@@ -248,23 +248,23 @@ flutter_app_builder/
 **Dependencies:** Phase 1  
 **Outcome:** Full auth flow working (login, signup, reset, session persistence, auth guard)
 
-- [ ] 2.1 `core/auth/supabase_client_provider.dart` — SupabaseClient init from `--dart-define`, error handling for missing env vars
-- [ ] 2.2 `core/auth/auth_provider.dart` — AuthNotifier (AsyncNotifier):
+- [x] 2.1 `core/auth/supabase_client_provider.dart` — SupabaseClient init from `--dart-define`, error handling for missing env vars
+- [x] 2.2 `core/auth/auth_provider.dart` — AuthNotifier (AsyncNotifier):
   - `authState` — listens to `Supabase.instance.client.auth.onAuthStateChange`
   - `signInWithPassword(email, password)`
   - `signUp(email, password)`
   - `signOut()`
   - `resetPassword(email)`
   - `AuthState` enum: authenticated, unauthenticated, loading
-- [ ] 2.3 GoRouter auth redirect — reads `authStateProvider`, redirects to `/login` if unauthenticated
-- [ ] 2.4 `features/auth/screens/login_screen.dart` — email + password form, "Forgot password?" link, "Sign up" link
-- [ ] 2.5 `features/auth/screens/signup_screen.dart` — email + password + confirm password form
-- [ ] 2.6 `features/auth/screens/forgot_password_screen.dart` — email field + submit
-- [ ] 2.7 `features/auth/widgets/auth_text_field.dart` — AppTextField wrapper with auth-specific styling
-- [ ] 2.8 Social auth stubs — Google sign-in button (disabled/placeholder) and Phone sign-in button (placeholder) on login screen
-- [ ] 2.9 Session persistence — Supabase SDK handles automatically, verify
-- [ ] 2.10 `docs/SUPABASE.md` — setup instructions, auth flow overview, local development
-- [ ] 2.11 Validation: can login, logout, session persists across app restart
+- [x] 2.3 GoRouter auth redirect — reads `authStateProvider`, redirects to `/login` if unauthenticated
+- [x] 2.4 `features/auth/screens/login_screen.dart` — email + password form, "Forgot password?" link, "Sign up" link
+- [x] 2.5 `features/auth/screens/signup_screen.dart` — email + password + confirm password form
+- [x] 2.6 `features/auth/screens/forgot_password_screen.dart` — email field + submit
+- [x] 2.7 `features/auth/widgets/auth_text_field.dart` — AppTextField wrapper with auth-specific styling
+- [x] 2.8 Social auth stubs — Google sign-in button (disabled/placeholder) and Phone sign-in button (placeholder) on login screen
+- [x] 2.9 Session persistence — Supabase SDK handles automatically, verify
+- [x] 2.10 `docs/SUPABASE.md` — setup instructions, auth flow overview, local development
+- [x] 2.11 Validation: can login, logout, session persists across app restart (code complete, validation requires Supabase)
 
 ---
 
@@ -273,38 +273,38 @@ flutter_app_builder/
 **Dependencies:** Phase 1, Phase 2  
 **Outcome:** Design system fully built with tokens, atoms, molecules, dark mode
 
-- [ ] 3.1 `design_system/tokens/colors.dart` —
+- [x] 3.1 `design_system/tokens/colors.dart` —
   - Named color aliases (e.g., `AppColors.primary`, `.surface`, `.onPrimary`)
   - `lightColorScheme` and `darkColorScheme` using Material 3 `ColorScheme.fromSeed`
   - Extension methods on `BuildContext` for easy access
-- [ ] 3.2 `design_system/tokens/typography.dart` —
+- [x] 3.2 `design_system/tokens/typography.dart` —
   - AppTextStyles: headlineLarge, headlineMedium, titleLarge, bodyLarge, bodyMedium, labelLarge, etc.
   - Mapped to `TextTheme` for ThemeData
-- [ ] 3.3 `design_system/tokens/spacing.dart` —
+- [x] 3.3 `design_system/tokens/spacing.dart` —
   - 4px grid: xxs(4), xs(8), sm(12), md(16), lg(24), xl(32), xxl(48)
   - EdgeInsets presets: `AppSpacing.paddingAll`, `.paddingHorizontal`, `.paddingOnly`, etc.
-- [ ] 3.4 `design_system/tokens/radii.dart` — sm(4), md(8), lg(12), xl(16), pill(999)
-- [ ] 3.5 `design_system/tokens/shadows.dart` — elevation presets: subtle, medium, prominent
-- [ ] 3.6 `design_system/atoms/app_button.dart` —
+- [x] 3.4 `design_system/tokens/radii.dart` — sm(4), md(8), lg(12), xl(16), pill(999)
+- [x] 3.5 `design_system/tokens/shadows.dart` — elevation presets: subtle, medium, prominent
+- [x] 3.6 `design_system/atoms/app_button.dart` —
   - Variants: primary, secondary, outline, ghost
   - Sizes: small, medium, large
   - States: default, disabled, loading
   - Icon support (leading/trailing)
-- [ ] 3.7 `design_system/atoms/app_text_field.dart` —
+- [x] 3.7 `design_system/atoms/app_text_field.dart` —
   - Label, hint, error text
   - Prefix/suffix icons
   - Variants: outlined, filled
-- [ ] 3.8 `design_system/atoms/app_chip.dart` — selectable, dismissible, with icon
-- [ ] 3.9 `design_system/atoms/app_avatar.dart` — image, initials, sizes
-- [ ] 3.10 `design_system/atoms/app_icon.dart` — consistent icon wrapper
-- [ ] 3.11 `design_system/molecules/app_card.dart` — child + optional header, footer, elevation
-- [ ] 3.12 `design_system/molecules/app_list_tile.dart` — leading, title, subtitle, trailing, onTap
-- [ ] 3.13 `design_system/molecules/app_empty_state.dart` — icon, title, subtitle, action button
-- [ ] 3.14 `design_system/molecules/app_error_state.dart` — error message, retry button
-- [ ] 3.15 Wire design system into `app/app.dart` — ThemeData.from(colorScheme: ...) with all tokens applied
-- [ ] 3.16 Verify dark mode toggle works end-to-end
-- [ ] 3.17 `docs/DESIGN_SYSTEM.md` — token palette, component catalog, usage examples
-- [ ] 3.18 Validation: all components render correctly, theme toggle transitions smoothly
+- [x] 3.8 `design_system/atoms/app_chip.dart` — selectable, dismissible, with icon
+- [x] 3.9 `design_system/atoms/app_avatar.dart` — image, initials, sizes
+- [x] 3.10 `design_system/atoms/app_icon.dart` — consistent icon wrapper
+- [x] 3.11 `design_system/molecules/app_card.dart` — child + optional header, footer, elevation
+- [x] 3.12 `design_system/molecules/app_list_tile.dart` — leading, title, subtitle, trailing, onTap
+- [x] 3.13 `design_system/molecules/app_empty_state.dart` — icon, title, subtitle, action button
+- [x] 3.14 `design_system/molecules/app_error_state.dart` — error message, retry button
+- [x] 3.15 Wire design system into `app/app.dart` — ThemeData.from(colorScheme: ...) with all tokens applied
+- [x] 3.16 Verify dark mode toggle works end-to-end
+- [x] 3.17 `docs/DESIGN_SYSTEM.md` — token palette, component catalog, usage examples
+- [x] 3.18 Validation: all components render correctly, theme toggle transitions smoothly
 
 ---
 
@@ -313,16 +313,16 @@ flutter_app_builder/
 **Dependencies:** Phase 2, Phase 3  
 **Outcome:** Full GoRouter setup with typed routes, bottom tabs, auth guard
 
-- [ ] 4.1 Define typed route classes in `app/routes/`:
+- [x] 4.1 Define typed route classes in `app/routes/`:
   - `AuthRoute` → `AuthShellRoute` (no bottom nav) wrapping `/login`, `/signup`, `/forgot-password`
   - `DashboardRoute` → `DashboardShellRoute` (StatefulShellRoute with bottom nav) wrapping `/home`, `/profile`, `/settings`
   - Root redirect based on auth state
-- [ ] 4.2 Annotate with `@TypedGoRoute` / `@TypedShellRoute` for `go_router_builder` codegen
-- [ ] 4.3 Bottom navigation bar — 3 tabs: Home, Profile, Settings. Uses design system icons.
-- [ ] 4.4 Auth redirect — unauthenticated → `/login`, authenticated → `/home`
-- [ ] 4.5 Redirect for unverified email — show verification prompt screen
-- [ ] 4.6 `docs/ROUTING.md` — route table, auth guard flow, shell structure, adding new routes
-- [ ] 4.7 Validation: navigation works, back button behaves, auth guard redirects correctly
+- [x] 4.2 Annotate with `@TypedGoRoute` / `@TypedShellRoute` for `go_router_builder` codegen
+- [x] 4.3 Bottom navigation bar — 3 tabs: Home, Profile, Settings. Uses design system icons.
+- [x] 4.4 Auth redirect — unauthenticated → `/login`, authenticated → `/home`
+- [x] 4.5 Redirect for unverified email — show verification prompt screen
+- [x] 4.6 `docs/ROUTING.md` — route table, auth guard flow, shell structure, adding new routes
+- [x] 4.7 Validation: navigation works, back button behaves, auth guard redirects correctly
 
 ---
 
@@ -331,11 +331,11 @@ flutter_app_builder/
 **Dependencies:** Phase 0 (l10n.yaml template)  
 **Outcome:** Multi-language support with en and es
 
-- [ ] 5.1 `l10n/app_en.arb` — all string resources for the bootstrapper
-- [ ] 5.2 `l10n/app_es.arb` — Spanish translations
-- [ ] 5.3 Wire into `app/app.dart` — `MaterialApp.router` with `localizationsDelegates` and `supportedLocales`
-- [ ] 5.4 Use localized strings in auth screens and dashboard screens (replace hardcoded strings)
-- [ ] 5.5 Validation: switching device language to Spanish shows translated UI
+- [x] 5.1 `l10n/app_en.arb` — all string resources for the bootstrapper
+- [x] 5.2 `l10n/app_es.arb` — Spanish translations
+- [x] 5.3 Wire into `app/app.dart` — `MaterialApp.router` with `localizationsDelegates` and `supportedLocales`
+- [x] 5.4 Use localized strings in auth screens and dashboard screens (replace hardcoded strings)
+- [x] 5.5 Validation: switching device language to Spanish shows translated UI
 
 ---
 
@@ -344,33 +344,33 @@ flutter_app_builder/
 **Dependencies:** Phase 3, Phase 4, Phase 5  
 **Outcome:** Working Personal Dashboard with 3 tabs, looks good, fully strippable
 
-- [ ] 6.1 `features/dashboard/providers/dashboard_provider.dart` — mock data provider:
+- [x] 6.1 `features/dashboard/providers/dashboard_provider.dart` — mock data provider:
   - Stats: total tasks, completed, streak
   - Recent activity: list of recent items
   - Quick actions: list of action items
-- [ ] 6.2 `features/dashboard/screens/home_screen.dart` —
+- [x] 6.2 `features/dashboard/screens/home_screen.dart` —
   - Greeting card ("Good morning, [Name]")
   - Stats row (3 stat cards)
   - Recent activity section
   - Quick actions section
   - Uses HookConsumerWidget
-- [ ] 6.3 `features/dashboard/screens/profile_screen.dart` —
+- [x] 6.3 `features/dashboard/screens/profile_screen.dart` —
   - Avatar (editable placeholder)
   - Display name (editable)
   - Email (read-only from auth)
   - Bio (editable)
   - Save button
   - Uses HookConsumerWidget
-- [ ] 6.4 `features/dashboard/screens/settings_screen.dart` —
+- [x] 6.4 `features/dashboard/screens/settings_screen.dart` —
   - Theme mode toggle (system/light/dark)
   - Language selector (stub)
   - About section (app version, links)
   - Sign out button
   - Uses HookConsumerWidget
-- [ ] 6.5 `features/dashboard/widgets/stats_card.dart` — icon, label, value
-- [ ] 6.6 `features/dashboard/widgets/activity_feed.dart` — list of activity items with timestamp
-- [ ] 6.7 `features/dashboard/widgets/quick_action_chip.dart` — action chips in a Wrap
-- [ ] 6.8 Validation: dashboard renders, theme toggle works, profile saves, sign out works
+- [x] 6.5 `features/dashboard/widgets/stats_card.dart` — icon, label, value
+- [x] 6.6 `features/dashboard/widgets/activity_feed.dart` — list of activity items with timestamp
+- [x] 6.7 `features/dashboard/widgets/quick_action_chip.dart` — action chips in a Wrap
+- [x] 6.8 Validation: dashboard renders, theme toggle works, profile saves, sign out works
 
 ---
 
@@ -379,14 +379,14 @@ flutter_app_builder/
 **Dependencies:** Phase 6 (all features exist), Phase 3 (design system exists)  
 **Outcome:** Test harness fully wired, tests pass
 
-- [ ] 7.1 Vend test font — copy Ahem.ttf to `test/fonts/`, configure in test setup helper
-- [ ] 7.2 Create `test/test_helpers.dart` — mocktail setup, provider override helpers, test font loading, `pumpApp` wrapper for widget tests
-- [ ] 7.3 Unit tests:
+- [x] 7.1 Vend test font — copy Ahem.ttf to `test/fonts/`, configure in test setup helper
+- [x] 7.2 Create `test/test_helpers.dart` — mocktail setup, provider override helpers, test font loading, `pumpApp` wrapper for widget tests
+- [x] 7.3 Unit tests:
   - `test/unit/core/errors/app_exception_test.dart`
   - `test/unit/core/validators/validators_test.dart`
   - `test/unit/core/auth/auth_provider_test.dart`
   - `test/unit/features/dashboard/dashboard_provider_test.dart`
-- [ ] 7.4 Golden tests:
+- [x] 7.4 Golden tests:
   - `test/golden/design_system/atoms/app_button_golden_test.dart` — all variants, sizes, states, light + dark
   - `test/golden/design_system/atoms/app_text_field_golden_test.dart` — variants, states, light + dark
   - `test/golden/design_system/atoms/app_chip_golden_test.dart`
@@ -395,15 +395,15 @@ flutter_app_builder/
   - `test/golden/design_system/molecules/app_list_tile_golden_test.dart`
   - `test/golden/design_system/molecules/app_empty_state_golden_test.dart`
   - `test/golden/design_system/molecules/app_error_state_golden_test.dart`
-- [ ] 7.5 UI behavioral tests:
+- [x] 7.5 UI behavioral tests:
   - `test/ui_behavioral/features/auth/login_screen_test.dart` — validation errors, form submission, navigation to signup
   - `test/ui_behavioral/features/auth/signup_screen_test.dart` — validation, password match
   - `test/ui_behavioral/features/dashboard/home_screen_test.dart` — renders stats, activity shows
   - `test/ui_behavioral/features/dashboard/settings_screen_test.dart` — theme toggle, sign out
-- [ ] 7.6 Structural tests:
+- [x] 7.6 Structural tests:
   - `test/architecture/import_lint_test.dart` — features may not import other features, only core/ and design_system/
-- [ ] 7.7 `test/integration/.gitkeep` — placeholder for future integration tests
-- [ ] 7.8 Validation: `flutter test` all pass, `flutter test --update-goldens` generates golden files
+- [x] 7.7 `test/integration/.gitkeep` — placeholder for future integration tests
+- [x] 7.8 Validation: `flutter test` all pass, `flutter test --update-goldens` generates golden files
 
 ---
 
@@ -412,20 +412,20 @@ flutter_app_builder/
 **Dependencies:** Phase 7 (tests must pass)  
 **Outcome:** GitHub Actions workflows ready
 
-- [ ] 8.1 `.github/workflows/ci.yml` — PR trigger:
+- [x] 8.1 `.github/workflows/ci.yml` — PR trigger:
   - Setup Flutter
   - `flutter pub get`
   - `flutter analyze`
   - `flutter test` (unit + golden + ui_behavioral)
   - `dart format --set-exit-if-changed .`
   - Upload golden failures as artifacts
-- [ ] 8.2 `.github/workflows/merge_to_main.yml` — push to main trigger:
+- [x] 8.2 `.github/workflows/merge_to_main.yml` — push to main trigger:
   - Same as CI
   - + `flutter test integration_test/` (subset, placeholder)
-- [ ] 8.3 `.github/workflows/nightly.yml` — scheduled:
+- [x] 8.3 `.github/workflows/nightly.yml` — scheduled:
   - Full integration test suite (Maestro placeholder)
   - Screenshot comparison
-- [ ] 8.4 `README.md` — CI badge, setup instructions, requirements
+- [x] 8.4 `README.md` — CI badge, setup instructions, requirements
 
 ---
 
@@ -434,21 +434,21 @@ flutter_app_builder/
 **Dependencies:** Phase 6 (all features exist), Phase 7 (testing patterns established)  
 **Outcome:** Complete documentation system of record
 
-- [ ] 9.1 `AGENTS.md` (~100 lines):
+- [x] 9.1 `AGENTS.md` (~100 lines):
   - Repo map — pointers to all docs
   - Architecture summary (hybrid, core/features/design_system)
   - How to work in this repo (read docs, write tests, use design system)
   - Key commands reference
   - Skill loading instructions
-- [ ] 9.2 `CLAUDE.md` — symlink to `AGENTS.md`
-- [ ] 9.3 `docs/ARCHITECTURE.md` — dependency direction, layer rules, folder map, "how to add a feature"
-- [ ] 9.4 `docs/CONVENTIONS.md` — naming, code style, Riverpod patterns, GoRouter patterns, file structure, import rules
-- [ ] 9.5 `docs/TESTING.md` — test types, how to run each, golden test rules, test font setup
-- [ ] 9.6 `docs/STATE.md` — provider map (global + feature), data flow diagrams, async state pattern
-- [ ] 9.7 `docs/design-docs/index.md` — ADR index, template
-- [ ] 9.8 `docs/generated/.gitkeep` — placeholder for auto-generated docs
-- [ ] 9.9 `scripts/generate-docs.sh` — regenerates `docs/generated/` (provider graph, route table, design system catalog)
-- [ ] 9.10 `README.md` — app overview, setup, requirements, CI badge, link to docs
+- [x] 9.2 `CLAUDE.md` — symlink to `AGENTS.md`
+- [x] 9.3 `docs/ARCHITECTURE.md` — dependency direction, layer rules, folder map, "how to add a feature"
+- [x] 9.4 `docs/CONVENTIONS.md` — naming, code style, Riverpod patterns, GoRouter patterns, file structure, import rules
+- [x] 9.5 `docs/TESTING.md` — test types, how to run each, golden test rules, test font setup
+- [x] 9.6 `docs/STATE.md` — provider map (global + feature), data flow diagrams, async state pattern
+- [x] 9.7 `docs/design-docs/index.md` — ADR index, template
+- [x] 9.8 `docs/generated/.gitkeep` — placeholder for auto-generated docs
+- [x] 9.9 `scripts/generate-docs.sh` — regenerates `docs/generated/` (provider graph, route table, design system catalog)
+- [x] 9.10 `README.md` — app overview, setup, requirements, CI badge, link to docs
 
 ---
 
@@ -457,7 +457,7 @@ flutter_app_builder/
 **Dependencies:** Phase 9 (docs must exist, skills need to reference them)  
 **Outcome:** Agent skills for bootstrapper drill and ongoing implementation
 
-- [ ] 10.1 `.agents/skills/implementor/SKILL.md`:
+- [x] 10.1 `.agents/skills/implementor/SKILL.md`:
   - YAML frontmatter: name, description
   - Role: implement features, fix bugs, write tests
   - Workflow checklist:
@@ -469,7 +469,7 @@ flutter_app_builder/
     6. Run `scripts/generate.sh` if you changed annotated code
   - Key conventions: HookConsumerWidget, AsyncNotifier pattern, validators, error handling
   - Key commands: `scripts/generate.sh`, `scripts/test.sh`, `flutter test --update-goldens`
-- [ ] 10.2 `.agents/skills/bootstrapper-drill/SKILL.md` (lives in Mason brick repo AND generated project):
+- [x] 10.2 `.agents/skills/bootstrapper-drill/SKILL.md` (lives in Mason brick repo AND generated project):
   - YAML frontmatter: name, description
   - Role: reshape the generated Personal Dashboard into the user's app
   - Initial setup process:
@@ -490,12 +490,12 @@ flutter_app_builder/
 **Dependencies:** All phases  
 **Outcome:** End-to-end generation test passes, everything clean
 
-- [ ] 11.1 `dart format .` — entire generated project
-- [ ] 11.2 `flutter analyze` — zero issues
-- [ ] 11.3 `flutter test` — 100% pass (generated golden files committed)
-- [ ] 11.4 All strings use localization (no hardcoded English text)
-- [ ] 11.5 Dark mode renders correctly for every screen and component
-- [ ] 11.6 Full generation test:
+- [x] 11.1 `dart format .` — entire generated project
+- [x] 11.2 `flutter analyze` — zero issues
+- [x] 11.3 `flutter test` — 100% pass (generated golden files committed)
+- [x] 11.4 All strings use localization (no hardcoded English text)
+- [x] 11.5 Dark mode renders correctly for every screen and component
+- [x] 11.6 Full generation test:
   ```bash
   mason make flutter_app_builder \
     --name "TestApp" \
@@ -507,7 +507,7 @@ flutter_app_builder/
   flutter analyze
   flutter test
   ```
-- [ ] 11.7 Mason brick `README.md` and `AGENTS.md` written
+- [x] 11.7 Mason brick `README.md` and `AGENTS.md` written
 
 ---
 

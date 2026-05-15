@@ -1,0 +1,19 @@
+# Mason brick build artifacts
+.dart_tool/
+build/
+.packages
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Generated test output
+test_output/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ahem test font (may have licensing restrictions)
+test/fonts/Ahem.ttf

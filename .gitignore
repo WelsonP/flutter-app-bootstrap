@@ -1,0 +1,16 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Mason test output (generated projects from mason make)
+test_app/
+generated_app/
+
+# Dart
+.dart_tool/
+.packages

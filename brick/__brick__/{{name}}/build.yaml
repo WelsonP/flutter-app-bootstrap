@@ -1,0 +1,22 @@
+targets:
+  $default:
+    builders:
+      riverpod_generator:
+        generate_for:
+          include:
+            - lib/core/auth/auth_provider.dart
+      go_router_builder:
+        generate_for:
+          include:
+            - lib/app/routes/app_router.dart
+      freezed:
+        generate_for:
+          include:
+            - lib/core/errors/app_exception.dart
+      json_serializable:
+        generate_for:
+          include:
+            - lib/**/*.dart
+    options:
+      build_runner:
+        delete_conflicting_outputs: true
