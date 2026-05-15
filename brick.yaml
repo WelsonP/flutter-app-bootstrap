@@ -1,0 +1,26 @@
+name: flutter_app_builder
+description: A Mason brick that generates a production-ready Flutter app foundation with Supabase auth, Riverpod state management, GoRouter navigation, Material 3 design system, and comprehensive testing.
+version: 1.0.0
+environment:
+  mason: ^0.1.2
+vars:
+  name:
+    type: string
+    description: The Flutter project/app name (snake_case)
+    default: my_app
+    prompt: What is the project name?
+  bundle_id:
+    type: string
+    description: The bundle identifier (e.g., com.example.myapp)
+    default: com.example.myapp
+    prompt: What is the bundle ID?
+  supabase_url:
+    type: string
+    description: Supabase project URL
+    default: https://example.supabase.co
+    prompt: What is the Supabase URL?
+  supabase_anon_key:
+    type: string
+    description: Supabase anonymous key
+    default: your-anon-key-here
+    prompt: What is the Supabase anon key?

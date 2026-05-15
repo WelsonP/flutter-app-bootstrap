@@ -1,0 +1,42 @@
+name: Merge to Main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  full-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run all tests
+        run: flutter test --coverage
+
+      - name: Run code generation check
+        run: |
+          dart run build_runner build --delete-conflicting-outputs
+          # Verify no uncommitted changes
+          git diff --exit-code
+
+      - name: Build APK (smoke test)
+        run: flutter build apk --debug --dart-define=SUPABASE_URL=test --dart-define=SUPABASE_ANON_KEY=test
